@@ -43,7 +43,7 @@ export default function App() {
               onTabChange={setActiveTab}
             />
             <div className="flex-1 overflow-hidden">
-              {activeTab === "chat" && <Chat />}
+              {activeTab === "chat" && <Chat group={activeGroup} user={user} />}
               {activeTab === "files" && <Files groupName={activeGroup.name} />}
               {activeTab === "tasks" && <Tasks />}
             </div>

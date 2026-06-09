@@ -23,7 +23,7 @@ export default function App() {
   }, [])
 
   if (loading) return (
-    <div className="min-h-screen bg-green-50 flex items-center justify-center">
+    <div className="min-h-screen bg-green-50 dark:bg-gray-950 flex items-center justify-center">
       <p className="text-gray-400 text-sm">Cargando...</p>
     </div>
   )
@@ -31,7 +31,7 @@ export default function App() {
   if (!user) return <Login />
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
       <Sidebar activeGroup={activeGroup} onSelectGroup={setActiveGroup} user={user} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -44,15 +44,15 @@ export default function App() {
             />
             <div className="flex-1 overflow-hidden">
               {activeTab === "chat" && <Chat group={activeGroup} user={user} />}
-              {activeTab === "files" && <Files groupName={activeGroup.name} />}
+              {activeTab === "files" && <Files group={activeGroup} user={user} />}
               {activeTab === "tasks" && <Tasks group={activeGroup} user={user} />}
             </div>
           </>
         ) : (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
-              <div className="text-4xl mb-3">🌿</div>
-              <p className="text-gray-500 text-sm">Selecciona un grupo para empezar</p>
+              <p className="text-4xl mb-3">🌿</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">Selecciona un grupo para empezar</p>
             </div>
           </div>
         )}

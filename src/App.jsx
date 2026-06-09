@@ -45,7 +45,7 @@ export default function App() {
             <div className="flex-1 overflow-hidden">
               {activeTab === "chat" && <Chat group={activeGroup} user={user} />}
               {activeTab === "files" && <Files groupName={activeGroup.name} />}
-              {activeTab === "tasks" && <Tasks />}
+              {activeTab === "tasks" && <Tasks group={activeGroup} user={user} />}
             </div>
           </>
         ) : (

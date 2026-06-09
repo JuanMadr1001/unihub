@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
+import { Routes, Route } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./firebase"
 import Login from "./pages/Login"
+import Join from "./pages/Join"
 import Sidebar from "./components/layout/Sidebar"
 import Topbar from "./components/layout/Topbar"
 import Chat from "./components/chat/Chat"
@@ -9,28 +11,10 @@ import Files from "./components/files/Files"
 import Tasks from "./components/tasks/Tasks"
 import { Menu } from "lucide-react"
 
-export default function App() {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+function MainApp({ user }) {
   const [activeGroup, setActiveGroup] = useState(null)
   const [activeTab, setActiveTab] = useState("chat")
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u)
-      setLoading(false)
-    })
-    return unsub
-  }, [])
-
-  if (loading) return (
-    <div className="min-h-screen bg-green-50 dark:bg-gray-950 flex items-center justify-center">
-      <p className="text-gray-400 text-sm">Cargando...</p>
-    </div>
-  )
-
-  if (!user) return <Login />
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-950 overflow-hidden">
@@ -60,11 +44,11 @@ export default function App() {
         {activeGroup ? (
           <>
             <Topbar
-  group={activeGroup}
-  activeTab={activeTab}
-  onTabChange={setActiveTab}
-  user={user}
-/>
+              group={activeGroup}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              user={user}
+            />
             <div className="flex-1 overflow-hidden">
               {activeTab === "chat" && <Chat group={activeGroup} user={user} />}
               {activeTab === "files" && <Files group={activeGroup} user={user} />}
@@ -81,5 +65,31 @@ export default function App() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function App() {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u)
+      setLoading(false)
+    })
+    return unsub
+  }, [])
+
+  if (loading) return (
+    <div className="min-h-screen bg-green-50 dark:bg-gray-950 flex items-center justify-center">
+      <p className="text-gray-400 text-sm">Cargando...</p>
+    </div>
+  )
+
+  return (
+    <Routes>
+      <Route path="/join/:code" element={<Join />} />
+      <Route path="*" element={user ? <MainApp user={user} /> : <Login />} />
+    </Routes>
   )
 }

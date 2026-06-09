@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD6p79OSzpchhw-SJgqpl65cexbI2RR4HI",
-  authDomain: "unihub-ad001.firebaseapp.com",
-  projectId: "unihub-ad001",
-  storageBucket: "unihub-ad001.firebasestorage.app",
-  messagingSenderId: "799102761576",
-  appId: "1:799102761576:web:1ab72b7372476a2f3e19dd"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
